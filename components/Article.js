@@ -86,7 +86,24 @@ const data = [
     thirdParagraph: `Hodor hodor - hodor... Hodor hodor hodor hodor. Hodor. Hodor! Hodor hodor, hodor hodor hodor hodor hodor; hodor hodor? Hodor!
           Hodor hodor, HODOR hodor, hodor hodor?! Hodor! Hodor hodor, HODOR hodor, hodor hodor, hodor, hodor hodor. Hodor, hodor.
           Hodor. Hodor, hodor, hodor. Hodor hodor... Hodor hodor hodor?! Hodor, hodor... Hodor hodor HODOR hodor, hodor hodor. Hodor.`
-  }
+  },
+
+  {
+    title: 'Boring',
+    date: 'Aug 1st, 2020',
+    firstParagraph: `Hodor hodor HODOR! Hodor hodor - hodor, hodor. Hodor hodor... Hodor hodor hodor; hodor hodor. Hodor hodor hodor, hodor, hodor
+          hodor. Hodor, hodor. Hodor. Hodor, hodor - hodor... Hodor hodor hodor; hodor HODOR hodor, hodor hodor?! Hodor hodor, hodor.
+          Hodor hodor hodor hodor hodor! Hodor hodor - HODOR hodor, hodor hodor hodor hodor hodor; hodor hodor? `,
+
+    secondParagraph: `Hodor, hodor. Hodor. Hodor, hodor, hodor. Hodor hodor, hodor. Hodor hodor, hodor, hodor hodor. Hodor! Hodor hodor, hodor;
+          hodor hodor hodor? Hodor, hodor. Hodor. Hodor, hodor - HODOR hodor, hodor hodor hodor! Hodor, hodor. Hodor. Hodor, HODOR
+          hodor, hodor hodor, hodor, hodor hodor. Hodor hodor - hodor - hodor... Hodor hodor hodor hodor hodor hodor hodor?! Hodor
+          hodor - hodor hodor hodor. Hodor. Hodor hodor... Hodor hodor hodor hodor hodor? `,
+
+    thirdParagraph: `Hodor hodor - hodor... Hodor hodor hodor hodor. Hodor. Hodor! Hodor hodor, hodor hodor hodor hodor hodor; hodor hodor? Hodor!
+          Hodor hodor, HODOR hodor, hodor hodor?! Hodor! Hodor hodor, HODOR hodor, hodor hodor, hodor, hodor hodor. Hodor, hodor.
+          Hodor. Hodor, hodor, hodor. Hodor hodor... Hodor hodor hodor?! Hodor, hodor... Hodor hodor HODOR hodor, hodor hodor. Hodor.`
+  },
 ];
 
 /*
@@ -103,6 +120,47 @@ const data = [
     <span class="expandButton">+</span>
   </div>
 
+*/
+
+function articleMaker(articleObj){
+  const articleDiv = document.createElement('div');
+  articleDiv.classList.add('article');
+
+  const articleH2 = document.createElement('h2');
+  articleH2.textContent = articleObj.title;
+  articleDiv.appendChild(articleH2);
+
+  const articleP0 = document.createElement('p');
+  articleP0.textContent = articleObj.date;
+  const articleP1 = document.createElement('p');
+  articleP1.textContent = articleObj.firstParagraph;
+  const articleP2 = document.createElement('p');
+  articleP2.textContent = articleObj.secondParagraph;
+  const articleP3 = document.createElement('p');
+  articleP3.textContent = articleObj.thirdParagraph;
+  articleDiv.appendChild(articleP1, articleP2, articleP3);
+
+  const articleExpand = document.createElement('span');
+  articleExpand.textContent = '+';
+  articleExpand.classList.add('expandButton');
+  articleExpand.addEventListener('click',() => {
+    if (articleDiv.className === 'article'){
+      articleDiv.classList.remove('article');
+      articleDiv.classList.add('open-article');
+    }
+    else{
+      articleDiv.classList.add('article');
+      articleDiv.classList.remove('open-article');
+    }
+    })
+  articleDiv.appendChild(articleExpand);
+  return articleDiv;
+  }
+
+
+/*
+
+
   Step 2: Still inside `articleMaker`, add an event listener to the span.expandButton.
   This listener should toggle the class 'article-open' on div.article.
 
@@ -110,6 +168,17 @@ const data = [
 
   Step 4: Outside your function now, loop over the data. At each iteration you'll use your component
   to create a div.article element and append it to the DOM inside div.articles (see index.html).
+
+  */
+
+  for (let i = 0; i < data.length; i++){
+    const tempArticle = articleMaker(data[i]);
+    document.querySelector('.articles').appendChild(tempArticle);
+  }
+
+
+  /*
+
 
   Step 5: Try adding new article object to the data array. Make sure it is in the same format as the others.
   Refresh the page to see the new article.
